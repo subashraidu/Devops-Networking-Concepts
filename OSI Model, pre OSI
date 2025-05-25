@@ -1,0 +1,96 @@
+
+
+#OSI Model
+
+
+Layer 7: Application
+What it does: Interfaces directly with the user/application (e.g., browser, email client)
+Examples: HTTP, HTTPS, DNS, FTP, SMTP
+DevOps Relevance: Headers, cookies, auth tokens, REST API calls
+
+Layer 6: Presentation
+What it does: Translates, encrypts, and compresses data
+Examples: SSL/TLS encryption, JPEG, ASCII, JSON formatting
+DevOps Relevance: HTTPS encryption, TLS handshakes, data encoding/decoding
+
+Layer 5: Session
+What it does: Establishes, maintains, and terminates sessions between devices
+Examples: Session tokens, cookies, NetBIOS, RPC
+DevOps Relevance: Persistent logins, session-based authentication
+
+Layer 4: Transport
+What it does: Responsible for reliable data transfer (segmentation, retransmission)
+Examples: TCP (reliable), UDP (faster, no guarantee)
+DevOps Relevance: Port numbers, TCP handshakes, packet loss troubleshooting
+
+Layer 3: Network
+What it does: Adds IP addresses and handles routing between networks
+Examples: IP, ICMP, ARP
+DevOps Relevance: IP address assignment, routing issues, ping, traceroute
+
+Layer 2: Data Link
+What it does: Adds MAC addresses, handles data frames, switches, and LAN communication
+Examples: Ethernet, PPP, VLAN
+DevOps Relevance: MAC address filtering, switch configs, ARP resolution
+
+Layer 1: Physical
+What it does: Transmits raw binary data over physical media (cables, radio, fiber)
+Examples: Ethernet cables, fiber optics, Wi-Fi, voltage levels
+DevOps Relevance: Cable checks, physical connections, NIC issues
+
+steps:
+DNS resolution → L7
+HTTP/HTTPS request → L7
+Encryption (TLS) → L6
+Session setup → L5
+TCP handshake → L4
+IP routing → L3
+MAC addressing & switching → L2
+Electric signals / fiber optics → L1
+
+
+
+#preliminary network operations:
+
+
+These are the preliminary network operations that occur before data is passed through the OSI layers for transmission.
+
+Stage 1: DNS Resolution (Name → IP)
+What happens:
+Your device needs the IP address of a domain (like google.com) to initiate communication.
+The DNS (Domain Name System) resolves this:
+Local DNS cache is checked (browser → OS → router).
+If not found, the query goes to the ISP's DNS server.
+If the ISP doesn't have it, the request is recursively forwarded to root and authoritative DNS servers.
+The resolved IP address is returned (e.g., 142.250.190.14 for Google).
+
+Purpose:
+Converts a human-readable domain into a machine-routable IP address.
+
+
+Stage 2: TCP Handshake (Connection Setup)
+Before any actual data transfer (like an HTTP request), a TCP connection must be established between the client and server.
+
+This is called the “3-Way TCP Handshake”:
+Step	Sender	Message	Description
+1	Client (Laptop)	SYN	"I want to connect" (synchronize sequence number)
+2	Server (e.g., Google)	SYN + ACK	"I acknowledge your request and I want to connect too"
+3	Client	ACK	"Acknowledged. Let’s start data transfer"
+Once the TCP connection is established, the OSI model layers take over to format, encrypt, segment, and transmit the data.
+
+
+
+Why This Matters for DevOps & Troubleshooting
+DNS resolution failures = Website won’t even begin to load.
+TCP handshake failures = Port closed, firewall rules, or connectivity issue.
+Tools to inspect:
+nslookup, dig, host → DNS resolution
+telnet, nc, curl -v → TCP connectivity
+Wireshark or tcpdump → to analyze handshakes
+		
+		
+Step	Layer	Description
+DNS Lookup	Pre-OSI	Resolves domain names to IP addresses
+TCP Handshake	Pre-OSI	Establishes a connection between client and server
+HTTP Request	Starts OSI	Begins at Layer 7 (Application) once TCP is ready
+
